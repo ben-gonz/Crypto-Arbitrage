@@ -1,4 +1,4 @@
-# Triangular Arbitrage Paper Trader
+# Triangular Arbitrage Paper Trader 🤑
 
 This project implements a triangular arbitrage strategy for cryptocurrencies using real-time exchange rate data. Below is a step-by-step walkthrough of the program's workflow, designed to identify and simulate arbitrage opportunities through paper trading.
 This was a final project for an Advanced Python Programming course at Utah State University. I cannot share the code (so my professor can continue giving this assignment out), but reach out to me if you are interested in seeing it.
