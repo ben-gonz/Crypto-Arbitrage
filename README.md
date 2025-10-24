@@ -5,50 +5,35 @@ This was a final project for an Advanced Python Programming course at Utah State
 
 ## Workflow
 
-### 1. **Setup and Initialization**
-- **Load Dependencies**: The program imports necessary libraries for HTTP requests, file handling, graph creation, and trading API integration.
-- **Configure API**: Connects to Alpaca's Trading API in paper trading mode using provided API keys to simulate trades without real funds.
-- **Define Currencies**: Establishes a dictionary mapping cryptocurrency names (e.g., Bitcoin) to their tickers (e.g., BTC) for consistent data handling.
-- **Set Up File System**: Creates a local `data` directory to store exchange rate data and trade results.
+### 1. **Initialization**
+- Imports libraries for API requests, graph processing, and trading.
+- Connects to a trading API in paper trading mode for simulated trades.
+- Defines a set of cryptocurrencies and their tickers.
+- Sets up a local directory for data storage.
 
 ### 2. **Fetch Exchange Rates**
-- **API Call**: Queries the CoinGecko API to retrieve real-time exchange rates for a predefined set of cryptocurrencies, covering all possible trading pairs (e.g., BTC/ETH, ETH/AAVE).
-- **Error Handling**: Checks for API errors (e.g., rate limits) and exits gracefully if data cannot be retrieved.
-- **Save Rates**: Writes fetched exchange rates to a local text file (`exchange_rates.txt`) for further processing.
+- Retrieves real-time exchange rates for cryptocurrency pairs from a public API.
+- Saves rates to a local file for processing.
+- Handles API errors and exits if data is unavailable.
 
-### 3. **Build Directed Graph**
-- **Graph Creation**: Constructs a directed graph using the NetworkX library, where:
-  - Nodes represent cryptocurrencies (e.g., BTC, ETH).
-  - Edges represent exchange rates between currency pairs, with weights corresponding to the rates.
-- **Data Storage**: Saves exchange rate data to a timestamped CSV file in the `data` directory for record-keeping.
+### 3. **Build Graph**
+- Creates a directed graph with cryptocurrencies as nodes and exchange rates as weighted edges.
+- Stores rate data in a timestamped CSV file.
 
-### 4. **Identify Arbitrage Opportunities**
-- **Path Exploration**: Iterates through all possible paths in the graph using permutations of nodes to identify potential arbitrage cycles.
-- **Profit Calculation**:
-  - Computes the profit factor for each path by multiplying exchange rates along the forward path (e.g., BTC → ETH → AAVE) and the reverse path (e.g., AAVE → ETH → BTC).
-  - A profit factor greater than 1 indicates a potential arbitrage opportunity.
-- **Select Best Path**: Identifies the path with the highest profit factor for trade execution.
+### 4. **Find Arbitrage Opportunities**
+- Explores all possible paths in the graph to identify arbitrage cycles.
+- Calculates profit factors by multiplying rates along forward and reverse paths.
+- Selects the path with the highest profit factor (>1) for trading.
 
-### 5. **Execute Simulated Trades**
-- **Trade Logic**:
-  - For the most profitable path (if profit factor > 1), executes simulated trades via Alpaca's API.
-  - Trades are performed in USD, buying $20 worth of each cryptocurrency along the forward path and selling immediately to return to USD.
-  - Repeats the process for the reverse path, skipping redundant trades.
-- **Position Management**: Ensures all positions are sold after each trade to maintain a cash-based strategy and avoid wash trade errors.
-- **Trade Logging**: Records each buy/sell action in a trade history log.
+### 5. **Simulate Trades**
+- Executes simulated trades for the best path using the trading API.
+- Buys and sells fixed amounts in USD along forward and reverse paths.
+- Logs each trade and ensures positions are closed after each step.
 
-### 6. **Output and Reporting**
-- **Console Output**: Displays the highest profit factor, forward and reverse paths, trade history, and final account balance in the terminal.
-- **File Output**:
-  - Saves trade history and final account balance to a `results.json` file.
-  - Stores exchange rate data in timestamped CSV files for reference.
-- **No Opportunities**: If no arbitrage opportunities are detected (profit factor ≤ 1), reports this to the console and saves an empty trade history.
-
-## Notes
-- The program operates in **paper trading mode** to simulate trades without financial risk.
-- All data is sourced from CoinGecko’s public API, ensuring real-time exchange rates.
-- Results are saved locally for transparency and further analysis.
-- The workflow is designed to be robust, with error handling for API failures and trade execution issues.
+### 6. **Output Results**
+- Displays the best path, profit factor, trade history, and final balance in the terminal.
+- Saves trade history and balance to a JSON file.
+- Reports if no arbitrage opportunities are found.
 
 ## Example Output
 ![Screenshot](https://github.com/user-attachments/assets/fff99c51-c975-493d-885e-9956779af2f4)
